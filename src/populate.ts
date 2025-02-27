@@ -4,6 +4,7 @@ import Product from './models/product';
 import { faker } from "@faker-js/faker"
 
 dotenv.config();
+mongoose.set('strictQuery', false);
 
 const seedData = async () => {
     try {

@@ -30,14 +30,14 @@ Volg deze stappen om het project op te zetten en uit te voeren:
 Dit project bestaat uit de volgende bestanden:
 
 ```
-my-typescript-project/
+ts-server-scaffold/
 │── src/
 │   ├── server.ts         # Centraal bestand van de server
 │   ├── database.ts       # MongoDB-verbinding
 │   ├── populate.ts       # Vul de database met random data
 │   ├── routes/
 │   │   ├── api.ts        # Test-route
-│   │   ├── products.ts        # CRUD route voor producten
+│   │   ├── products.ts   # CRUD route voor producten
 │── .env                  # Configuratie bestand
 │── package.json
 │── tsconfig.json
@@ -48,22 +48,16 @@ my-typescript-project/
 Maak eerst een `.env` bestand aan in de root van je project met de volgende inhoud:
 ```env
 PORT=3000
-MONGO_URI=mongodb://localhost:27017/mydatabase
+MONGO_URI=mongodb://localhost:27017/<database_naam>
 ```
+Let op, de database_naam moet lowercase zijn en mag geen speciale karakters, anders dan underscores `_` bevatten.
 
 Om de server te starten, voer uit:
 ```bash
-npm start
+npm run dev
 ```
 
-De server draait op `http://localhost:3000`.
-
-### Het project bouwen
-
-Om de TypeScript-code te compileren, gebruik:
-```bash
-npm run build
-```
+Dit start de server op het port nummer zoals in het .env bestand staat aangegeven `http://localhost:3000`. Ook worden code wijzigingen worden in real-time ge-update.
 
 ### Populate script
 
