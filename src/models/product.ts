@@ -1,19 +1,32 @@
-import mongoose from 'mongoose';
+import { PrismaClient } from '@prisma/client';
 
-const ProductSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    image: String
-});
+const prisma = new PrismaClient();
 
-// Verwijder __v wanneer je het document omzet naar JSON of object
-ProductSchema.set('toJSON', {
-    transform: (doc, ret) => {
-        // Verwijder __v uit de response
-        delete ret.__v;
-        return ret;
-    }
-});
+export const getAllProducts = async () => {
+    return await prisma.product.findMany();
+};
 
-const Product = mongoose.model('Product', ProductSchema);
-export default Product;
+export const getProductById = async (id: number) => {
+    return await prisma.product.findUnique({
+        where: { id },
+    });
+};
+
+export const createProduct = async (name: string, price: number, image: string) => {
+    return await prisma.product.create({
+        data: { name, price, image },
+    });
+};
+
+export const updateProduct = async (id: number, name: string, price: number, image: string) => {
+    return await prisma.product.update({
+        where: { id },
+        data: { name, price, image },
+    });
+};
+
+export const deleteProduct = async (id: number) => {
+    return await prisma.product.delete({
+        where: { id },
+    });
+};

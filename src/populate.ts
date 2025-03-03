@@ -1,34 +1,30 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import Product from './models/product';
-import { faker } from "@faker-js/faker"
+import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
-dotenv.config();
-mongoose.set('strictQuery', false);
+const prisma = new PrismaClient();
 
 const seedData = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI as string);
+        // Delete all existing products
+        await prisma.product.deleteMany();
 
-        // Delete all products
-        await Product.deleteMany(); // Clear existing data
-        
         // Create 8 new products
-        const products = []
+        const products = [];
         for (let i = 0; i < 8; i++) {
             products.push({
                 name: faker.commerce.productName(),
-                price: faker.commerce.price(),
+                price: parseFloat(faker.commerce.price()), // Ensure it's a float
                 image: faker.image.url()
             });
         }
-        await Product.insertMany(products);
+
+        await prisma.product.createMany({ data: products });
 
         console.log('Test data inserted successfully!');
-        process.exit();
     } catch (error) {
-        console.error('Error seeding database', error);
-        process.exit(1);
+        console.error('Error seeding database:', error);
+    } finally {
+        await prisma.$disconnect();
     }
 };
 

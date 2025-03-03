@@ -1,17 +1,16 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
 
-dotenv.config();
+const prisma = new PrismaClient();
 
 const connectDB = async () => {
     try {
-        mongoose.set('strictQuery', false);
-        await mongoose.connect(process.env.MONGO_URI as string);
-        console.log('Connected to MongoDB');
+        await prisma.$connect();
+        console.log('Connected to SQLite database');
     } catch (error) {
-        console.error('Error connecting to MongoDB', error);
+        console.error('Error connecting to SQLite', error);
         process.exit(1);
     }
 };
 
+export { prisma, connectDB };
 export default connectDB

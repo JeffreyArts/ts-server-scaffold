@@ -1,6 +1,6 @@
 # TS Server Scaffold
 
-Dit project is een eenvoudige Node.js-applicatie met Express en MongoDB, geschreven in TypeScript.
+Dit project is een eenvoudige Node.js-applicatie met Express en SQLite, geschreven in TypeScript, en maakt gebruik van Prisma als ORM.
 
 ## Aan de slag
 
@@ -9,8 +9,7 @@ Volg deze stappen om het project op te zetten en uit te voeren:
 ### Vereisten
 
 - [Node.js](https://nodejs.org/) en npm
-- [MongoDB]()
-
+- Geen aparte database nodig – SQLite wordt gebruikt als embedded database
 
 ### Installatie
 
@@ -25,20 +24,33 @@ Volg deze stappen om het project op te zetten en uit te voeren:
    npm install
    ```
 
+3. Initialiseer Prisma:
+```bash
+npx prisma init
+```
+
+4. Maak een eerste migratie aan en genereer de Prisma Client:
+```bash
+npm run prisma:migrate
+npm run prisma:generate
+```
+
 ### Projectstructuur
 
 Dit project bestaat uit de volgende bestanden:
 
 ```
 ts-server-scaffold/
+│── prisma/
+│   └── schema.prisma       # Prisma schema definitie
 │── src/
-│   ├── server.ts         # Centraal bestand van de server
-│   ├── database.ts       # MongoDB-verbinding
-│   ├── populate.ts       # Vul de database met random data
+│   ├── server.ts           # Centraal bestand van de server
+│   ├── database.ts         # SQLite database-verbinding via Prisma
+│   ├── populate.ts         # Vul de database met random data via Prisma
 │   ├── routes/
-│   │   ├── api.ts        # Test-route
-│   │   ├── products.ts   # CRUD route voor producten
-│── .env                  # Configuratie bestand
+│   │   ├── api.ts          # Test-route
+│   │   └── products.ts     # CRUD route voor producten, nu met Prisma
+│── .env                    # Configuratie bestand
 │── package.json
 │── tsconfig.json
 ```
@@ -48,7 +60,7 @@ ts-server-scaffold/
 Maak eerst een `.env` bestand aan in de root van je project met de volgende inhoud:
 ```env
 PORT=3000
-MONGO_URI=mongodb://localhost:27017/<database_naam>
+DATABASE_URL="file:./database_naam.db"
 ```
 Let op, de database_naam moet lowercase zijn en mag geen speciale karakters, anders dan underscores `_` bevatten.
 
@@ -82,12 +94,13 @@ Het script is nuttig voor ontwikkelingsdoeleinden om snel testdata in je databas
 - [TypeScript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
-- [MongoDB](https://www.mongodb.com/)
-- [Mongoose](https://mongoosejs.com/)
+- [SQLite](https://www.sqlite.org/index.html)
+- [Prisma](https://www.prisma.io/)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 
 ## Tips!
-- Gebruik [MongoDB Compass](https://www.mongodb.com/products/tools/compass) om gemakkelijk inzicht te krijgen in je database
+
+- Gebruik [Prisma Studio](https://www.prisma.io/studio) om je SQLite-database visueel te inspecteren.
 - Gebruik [Postman](https://www.postman.com/downloads/) om de API endpoints te testen
 
 

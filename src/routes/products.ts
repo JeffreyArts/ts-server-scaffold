@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Product from '../models/product';
+import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } from '../models/product';
 
 const router = Router();
 
@@ -8,8 +8,7 @@ router.post('/', async (req, res) => {
     const { name, price, image } = req.body;
 
     try {
-        const newProduct = new Product({ name, price, image });
-        await newProduct.save();
+        const newProduct = await createProduct(name, price, image);
         res.status(201).json(newProduct);
     } catch (error) {
         console.error('Error creating product', error);
@@ -20,7 +19,7 @@ router.post('/', async (req, res) => {
 // Get all products
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await getAllProducts();
         res.status(200).json(products);
     } catch (error) {
         console.error('Error fetching products', error);
@@ -33,7 +32,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const product = await Product.findById(id);
+        const product = await getProductById(Number(id));
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
@@ -52,11 +51,7 @@ router.put('/:id', async (req, res) => {
     const { name, price, image } = req.body;
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(
-            id,
-            { name, price, image },
-            { new: true }
-        );
+        const updatedProduct = await updateProduct(Number(id), name, price, image);
 
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
@@ -74,7 +69,7 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const deletedProduct = await Product.findByIdAndDelete(id);
+        const deletedProduct = await deleteProduct(Number(id));
 
         if (!deletedProduct) {
             return res.status(404).json({ message: 'Product not found' });
