@@ -25,15 +25,15 @@ Volg deze stappen om het project op te zetten en uit te voeren:
    ```
 
 3. Initialiseer Prisma:
-```bash
-npx prisma init
-```
+   ```bash
+   npx prisma init
+   ```
 
 4. Maak een eerste migratie aan en genereer de Prisma Client:
-```bash
-npm run prisma:migrate
-npm run prisma:generate
-```
+   ```bash
+   npm run prisma:migrate
+   npm run prisma:generate
+   ```
 
 ### Projectstructuur
 
