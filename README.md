@@ -60,7 +60,7 @@ ts-server-scaffold/
 Maak eerst een `.env` bestand aan in de root van je project met de volgende inhoud:
 ```env
 PORT=3000
-DATABASE_URL="file:./database_naam.db"
+DATABASE_URL="file:./databasenaam.db"
 ```
 Let op, de database_naam moet lowercase zijn en mag geen speciale karakters, anders dan underscores `_` bevatten.
 
